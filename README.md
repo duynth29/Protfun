@@ -1,2 +1,2 @@
 # Protfun
-This repository contains Python implementations of commonly used functions in anprotein 
+This repository contains Python implementations of commonly used functions for analyzing protein structures and functions.

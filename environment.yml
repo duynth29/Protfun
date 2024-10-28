@@ -1,0 +1,32 @@
+name: Protfun
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+  - schrodinger 
+dependencies:
+  - python=3.9
+  - numpy
+  - pandas
+  - scipy
+  - matplotlib
+  - seaborn
+  - scikit-learn
+  - jupyterlab
+  - biopython
+  - pymol
+  - mdtraj
+  - openmm
+  - rdkit
+  - h5py
+  - tqdm
+  - networkx
+  - plotly
+  - ipywidgets
+  - nb_conda_kernels
+  - pip
+  - pymol
+  - pip:
+      - alphafold
+      - colabfold
+      - py3Dmol

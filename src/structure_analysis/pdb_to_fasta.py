@@ -3,6 +3,19 @@ from Bio import PDB
 """
 This script extracts the protein sequence from a PDB file and saves it in FASTA format.
 """
+def three_to_one(residue):
+    """
+    Convert three-letter residue name to one-letter residue name
+    """
+    three_to_one_dict = {
+        'ALA': 'A', 'ARG': 'R', 'ASN': 'N', 'ASP': 'D', 'CYS': 'C',
+        'GLU': 'E', 'GLN': 'Q', 'GLY': 'G', 'HIS': 'H', 'ILE': 'I',
+        'LEU': 'L', 'LYS': 'K', 'MET': 'M', 'PHE': 'F', 'PRO': 'P',
+        'SER': 'S', 'THR': 'T', 'TRP': 'W', 'TYR': 'Y', 'VAL': 'V',
+        # Add more mappings if necessary
+    }
+    return three_to_one_dict.get(residue, 'X')  # 'X' for unknown residues
+
 def extract_sequence_from_pdb(pdb_file):
     parser = PDB.PDBParser(QUIET=True)
     structure = parser.get_structure('protein', pdb_file)
@@ -13,13 +26,13 @@ def extract_sequence_from_pdb(pdb_file):
             chain_sequence = [] # extract sequence from one chain
             for residue in chain:
                 if PDB.is_aa(residue, standard=True):
-                    chain_sequence.append(PDB.Polypeptide.three_to_one(residue.get_resname()))
+                    chain_sequence.append(three_to_one(residue.get_resname()))
             sequences.append(''.join(chain_sequence)) #append sequence of one chain to the list of sequences in PDB file
     return sequences
 
 def sequences_to_fasta(sequences: list[str], pdb_file: str, output: str) -> None:
     #get the file name without the extension
-    file_name = pdb_file.split('/', 1)[-1].rsplit('.', 1)[0]
+    file_name = pdb_file.split('/')[-1].rsplit('.')[0]
     fasta_file = output + '/' + file_name + '.fasta'
     with open(fasta_file, 'w') as f:
         for i, sequence in enumerate(sequences):
@@ -35,7 +48,7 @@ def main():
 
     sequences = extract_sequence_from_pdb(args.pdb_file)
     sequences_to_fasta(sequences, args.pdb_file, args.output)
-    print(f"Protein sequence saved to {args.output}/{args.pdb_file.split('/', 1)[-1].split('.', 1)[0] + '.fasta'}")
+    print(f"Protein sequence saved to {args.output}/{args.pdb_file.split('/')[-1].split('.')[0] + '.fasta'}")
 
 if __name__ == '__main__':
     main()

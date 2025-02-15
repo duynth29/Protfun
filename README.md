@@ -1,6 +1,10 @@
 # Protfun
 This repository contains Python implementations of commonly used functions for analyzing protein structures and functions.
 
+To install, run the follow command
+```bash
+   conda env create -f environment.yml
+```
 
 ```
 Protfun/
